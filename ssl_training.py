@@ -13,7 +13,7 @@ from networks import get_model
 from tools import AverageMeter, knn_monitor, Logger, file_exist_check
 from dataset import get_dataset
 from optimizers import get_optimizer, LR_Scheduler
-from linear_eval import main as linear_eval
+from linear_training import main as linear_eval
 from datetime import datetime
 import time
 
