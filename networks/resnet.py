@@ -3,8 +3,7 @@ import torch.nn as nn
 import os
 from torchvision import models
 
-__all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
-           'resnet152', 'resnext50_32x4d', 'resnext101_32x8d']
+__all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50']
 
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
@@ -123,7 +122,6 @@ class ResNet(nn.Module):
         self.groups = groups
         self.base_width = width_per_group
         
-        ## CIFAR10: kernel_size 7 -> 3, stride 2 -> 1, padding 3->1
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=3, stride=1, padding=1, bias=False)
         ## END
         
@@ -147,9 +145,6 @@ class ResNet(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
 
-        # Zero-initialize the last BN in each residual branch,
-        # so that the residual branch starts with zeros, and each residual block behaves like an identity.
-        # This improves the model by 0.2~0.3% according to https://arxiv.org/abs/1706.02677
         if zero_init_residual:
             for m in self.modules():
                 if isinstance(m, Bottleneck):
@@ -269,54 +264,6 @@ def resnet50(pretrained=True, progress=True, device='cpu', **kwargs):
                    **kwargs)
 
 
-def resnet101(pretrained=False, progress=True, device='cpu', **kwargs):
-    """Constructs a ResNet-101 model.
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
-    return _resnet('resnet101', Bottleneck, [3, 4, 23, 3], pretrained, progress, device,
-                   **kwargs)
-
-
-def resnet152(pretrained=False, progress=True, device='cpu', **kwargs):
-    """Constructs a ResNet-152 model.
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
-    return _resnet('resnet152', Bottleneck, [3, 8, 36, 3], pretrained, progress, device,
-                   **kwargs)
-
-
-def resnext50_32x4d(pretrained=False, progress=True, device='cpu', **kwargs):
-    """Constructs a ResNeXt-50 32x4d model.
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
-    kwargs['groups'] = 32
-    kwargs['width_per_group'] = 4
-    return _resnet('resnext50_32x4d', Bottleneck, [3, 4, 6, 3],
-                   pretrained, progress, device, **kwargs)
-
-
-def resnext101_32x8d(pretrained=False, progress=True, device='cpu', **kwargs):
-    """Constructs a ResNeXt-101 32x8d model.
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
-    kwargs['groups'] = 32
-    kwargs['width_per_group'] = 8
-    return _resnet('resnext101_32x8d', Bottleneck, [3, 4, 23, 3],
-                   pretrained, progress, device, **kwargs)
-
-
 if __name__ == "__main__":
     model = resnet18()
-    print(sum(p.numel() for p in model.parameters() if p.requires_grad)) # 11173962
+    print(sum(p.numel() for p in model.parameters() if p.requires_grad)) 
