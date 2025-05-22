@@ -1,7 +1,7 @@
 # DEBRA
 ## Project Introduction
 This project primarily introduces a novel on-orbit self-supervised split learning framework designed
-to achieve real-time in-orbit feature extraction from satellite monitoring data. The framework mainly includes
+to achieve real-time on-orbit feature extraction from satellite monitoring data. The framework mainly includes
 the following components: self-supervised contrastive learning, split learning, on-orbit distributed 
 training optimization algorithms, and model split optimization algorithms. Details are provided in the file structure.
 ## ENVS
