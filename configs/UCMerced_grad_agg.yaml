@@ -1,0 +1,49 @@
+name: simsiam_resnet18
+dataset:
+  name: UCMerced
+  image_size: 128
+  num_workers: 8
+
+model:
+  name: simsiam
+  backbone: resnet18
+  proj_layers: 2
+
+train:
+  optimizer:
+    name: sgd
+    weight_decay: 0.0005
+    momentum: 0.9
+  warmup_epochs: 10
+  warmup_lr: 0
+  base_lr: 0.3
+  final_lr: 0
+  num_epochs: 50
+  stop_at_epoch: 50
+  batch_size: 32
+  knn_monitor: False
+  knn_interval: 10
+  knn_k: 200
+  train_data_dir: ../dataset/UCMerced_split/train
+  test_data_dir: ../dataset/UCMerced_split/test
+
+eval:
+  optimizer:
+    name: sgd
+    weight_decay: 0
+    momentum: 0.9
+  warmup_lr: 0
+  warmup_epochs: 0
+  base_lr: 0.03
+  final_lr: 0
+  batch_size: 128
+  num_epochs: 20
+  stop_at_epoch: 20
+  train_data_dir: dataset/UCMerced_split/train
+  test_data_dir: dataset/UCMerced_split/test
+
+logger:
+  tensorboard: False
+  matplotlib: False
+
+seed: 1234
