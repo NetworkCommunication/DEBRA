@@ -3,7 +3,6 @@ import torch.nn as nn
 import os
 from torchvision import models
 
-# https://raw.githubusercontent.com/huyvnphan/PyTorch_CIFAR10/master/cifar10_models/resnet.py
 __all__ = ['ResNet', 'resnet18']
 
 
