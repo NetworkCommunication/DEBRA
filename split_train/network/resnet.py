@@ -290,4 +290,4 @@ def resnet50(pretrained=True, progress=True, device='cpu', **kwargs):
 
 if __name__ == "__main__":
     model = resnet18()
-    print(sum(p.numel() for p in model.parameters() if p.requires_grad)) # 11173962
+    print(sum(p.numel() for p in model.parameters() if p.requires_grad)) 
